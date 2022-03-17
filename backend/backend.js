@@ -14,18 +14,6 @@ const database = knex({
     }
   });
 app.get('/', (req, res) => {
-  console.log('Working fine');
-  database('login').where({
-    email:'abc@gmail.com'
-  }).select('*').then(data => {
-    console.log(data[0]);
-    res.json(data[0]);
-  }).catch(err => {res.status('404').json('notfound'); console.log('Pls try again => ',err)});
-  database('register').insert({
-    email:'xyzt@gmail.com',
-    Password:'xyzt',
-    name:'xyzt'
-  }).then(response => {console.log(response)});
   res.send('Done the job');
 });
 app.post('/signup', (req, res) => {
