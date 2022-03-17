@@ -39,7 +39,7 @@ const Signup = (props) => {
         )
     }
     const verifyUser = () => {
-        fetch('http://localhost:4000/signup',{
+        fetch('https://items-price-tracker.herokuapp.com/signup',{
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
@@ -87,7 +87,7 @@ const Top = styled.div`
     align-self:center;
     background: rgba(42, 84, 234, 0.35);
     width:100%;
-    color:wheat;
+    color:red;
     font-family:'monaco';
 `;
 const Bottom = styled.div`

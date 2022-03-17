@@ -9,7 +9,8 @@ const Register = () => {
   const [password,setPassword] = useState("");
   const [error,setError] = useState("");
   const addUser = () => {
-    fetch('http://localhost:4000/register',{
+    fetch('https://items-price-tracker.herokuapp.com/register',{
+        mode:'no-cors',
         method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
