@@ -18,6 +18,7 @@ const Signup = (props) => {
         auth.onAuthStateChanged(async (user) => {
             if(user){
                 setUser(user);
+                console.log(username);
                 history('/home');
             }
         })
@@ -50,7 +51,10 @@ const Signup = (props) => {
             if(user === "not found"){
                 setError("login_error"); 
             }
-            else history('/home');
+            else{
+                setUser({name:'xyz',email:email,photoURL:''});
+                history('/home');
+            }
             console.log(user,typeof(user));
             
         })

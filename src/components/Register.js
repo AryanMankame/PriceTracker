@@ -2,15 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
+import {useEffect} from 'react';
+import {setLoginUserDetails} from '../store/UserSlice.js';
+import {useDispatch,useSelector} from 'react-redux';
 const Register = () => {
   const history = useNavigate();
+  const dispatch = useDispatch();
   const [name,setName] = useState("");
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const [error,setError] = useState("");
   const addUser = () => {
+    // Heroku Url => https://items-price-tracker.herokuapp.com
     fetch('https://items-price-tracker.herokuapp.com/register',{
-        mode:'no-cors',
         method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
@@ -27,9 +31,21 @@ const Register = () => {
           setError("*Invalid Input");console.log(user,'=>>',typeof(user));
         }
         else if(user === 'Successful'){
+          setUser();
+          console.log('Directing to the home page');
           history('/home');
         }
     })
+  }
+  const setUser = () => {
+    dispatch(
+        setLoginUserDetails({
+            name: name,
+            email: email,
+            photo: email
+        }
+        )
+    )
   }
   return (
     <Entire>
