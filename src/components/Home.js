@@ -58,7 +58,7 @@ const Home = () => {
         }
       console.log(settings);
     },[username]);
-    const [show,setShow] = useState(false);H
+    const [show,setShow] = useState(false);
     const email = useSelector(state => state.user.email);
     const showPopUp = () => {
         setShow(prev=> !prev);
