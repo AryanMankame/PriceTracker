@@ -13,8 +13,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 let m = 0;
+let Dataofusers = []
 const Home = () => {
-    const [Dataofusers,setDataofusers] = useState([]);
     const [CardofUsers,setCardofUsers] = useState([]);
     const history = useNavigate();
     const dispatch = useDispatch();
@@ -54,7 +54,7 @@ const Home = () => {
           test();
           console.log(m);
           m++;
-          setInterval(() => {test();},60*1000);
+          setInterval(() => {test();},10*60*1000);
         }
 
     },[username]);
@@ -116,23 +116,19 @@ const Home = () => {
       fetch('https://items-price-tracker.herokuapp.com/frontend1',{
         method:'POST',
         headers: {'Content-type': 'application/json'},
-      }).then(response => response.json()).then(data => {console.log(data); setStatelist(data); setDataofusers(data); setTimeout(() => { setCards(); },2000);})
+      }).then(response => response.json()).then(data => {console.log(data); setStatelist(data);  setTimeout(() => { setCards(); },1000);})
     }
     const test = () => {
       //https://items-price-tracker.herokuapp.com
-        console.log(email);
-        if(email === null){
-          setDataofusers([]);
-          return ;
-        }
-        setTimeout(() => {waitFn()},60*1000);
-        fetch('https://items-price-tracker.herokuapp.com/frontend',{
+        console.log("Test",email);
+        // setTimeout(() => {waitFn()},60*1000);
+        fetch('http://localhost:4000/frontend',{
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 email
             })
-        }).then(response => response.json()).then(data => {console.log(data); }).catch(err => console.log('error => ' +err));
+        }).then(response => response.json()).then(data => {console.log("1 => ",data); setStatelist(data); Dataofusers = data; setTimeout(() => { setCards(); },1000);}).catch(err => console.log('error => ' +err));
         // fetch('https://git.heroku.com/items-price-tracker.git',{ mode : "no-cors"}).then(response => response.json()).then(data => {console.log(data);});
       }
     return(
