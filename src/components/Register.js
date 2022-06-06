@@ -81,7 +81,7 @@ const Entire = styled.div`
   }
   .register{
     border-radius:10px;
-    width:10%;
+    width:150px;
     height:7%;
     cursor:pointer;
     color:white;

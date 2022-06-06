@@ -52,11 +52,11 @@ const Home = () => {
         });
         if(m === 0){
           test();
-          test();
+          console.log(m);
           m++;
           setInterval(() => {test();},60*1000);
         }
-      console.log(settings);
+
     },[username]);
     const [show,setShow] = useState(false);
     const email = useSelector(state => state.user.email);
@@ -64,8 +64,7 @@ const Home = () => {
         setShow(prev=> !prev);
     }
     const signOut = () => {
-        const p = auth.signOut();
-        p.then(() => {
+        auth.signOut().then(() => {
             dispatch( setSignOutState() );
             history('/');
         });
@@ -113,15 +112,29 @@ const Home = () => {
             }
         })
     }
+    const waitFn = () => {
+      fetch('https://items-price-tracker.herokuapp.com/frontend1',{
+        method:'POST',
+        headers: {'Content-type': 'application/json'},
+      }).then(response => response.json()).then(data => {console.log(data); setStatelist(data); setDataofusers(data); setTimeout(() => { setCards(); },2000);})
+    }
     const test = () => {
+      //https://items-price-tracker.herokuapp.com
+        console.log(email);
+        if(email === null){
+          setDataofusers([]);
+          return ;
+        }
+        setTimeout(() => {waitFn()},60*1000);
         fetch('https://items-price-tracker.herokuapp.com/frontend',{
             method: 'POST',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 email
             })
-        }).then(response => response.json()).then(data => {console.log(data); setStatelist(data); setDataofusers(data); setTimeout(() => { setCards(); },2000); }).catch(err => console.log('error => ' +err));
-    }
+        }).then(response => response.json()).then(data => {console.log(data); }).catch(err => console.log('error => ' +err));
+        // fetch('https://git.heroku.com/items-price-tracker.git',{ mode : "no-cors"}).then(response => response.json()).then(data => {console.log(data);});
+      }
     return(
         <>
         {  show ?
@@ -129,7 +142,10 @@ const Home = () => {
         <Entire>
             <Logo>
                 <SignData>
+                {email !== null ?
                 <img src = {`https://i2.wp.com/ui-avatars.com/api//${email[0]}/128?ssl=1`} alt="img"></img>
+                :<img src = {`https://i2.wp.com/ui-avatars.com/api//UN/128?ssl=1`} alt="img"></img>
+                }
                 <div className='sign-out' onClick={signOut}>SIGN OUT</div>
                 </SignData>    
             </Logo>
@@ -191,7 +207,7 @@ const SignData = styled.div`
         visibility:hidden;
         color:wheat;
         padding:3px;
-        margin-top:25px;
+        margin-top:5px;
         margin-right:3px;
         cursor:pointer;
     }

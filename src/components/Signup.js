@@ -16,7 +16,7 @@ const Signup = (props) => {
     const [error,setError] = useState("");
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
-            if(user){
+            if(user !== null && username !== null && username !== undefined){
                 setUser(user);
                 console.log(username);
                 history('/home');
